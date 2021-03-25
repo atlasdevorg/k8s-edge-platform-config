@@ -5,4 +5,3 @@ resources:
   - apply-filterrules-job.yaml
   - apply-rules-job.yaml
   - label-data-job.yaml
-  - namespace.yaml

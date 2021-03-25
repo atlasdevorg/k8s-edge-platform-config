@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - namespace-kafka-streams.yaml
   - namespace-tenant-apps.yaml
+  - namespace-platform-infrastructure.yaml
 
 
 

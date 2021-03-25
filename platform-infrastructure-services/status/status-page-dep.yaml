@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: status-page
-  namespace: boost
+  namespace: platform-infrastructure
   labels:
     app: status-page
 spec:
