@@ -29,36 +29,34 @@ The Git repository contains the following top directories:
 - **clusters** dir contains the Flux configuration per cluster
 
 ```
-├── apps
-│   ├── base
-│   ├── production 
-│   └── staging
-├── infrastructure
+├── platform-apps
+│   └── base
+|         ├── iotedge
+│         └── kafka-streams
+├── platform-infrastructure-base
 │   ├── iotedge
 │   ├── kafka
-|   |── sealedsecrets
+│   ├── sealedsecrets
 │   └── sources
-└── clusters
-    ├── dev
-    └── live
-```
-
-The apps configuration is structured into:
-
-- **apps/base/** dir contains namespaces, Helm release definitions and Deployments
-- **apps/live/** dir contains the live values
-- **apps/dev/** dir contains the dev values
+└── platform-infrastructure-base
+    ├── kafka
+    |── sealedsecrets
+    └── sources
 
 ```
-./apps/
+
+The **platform-apps/base** dir contains namespaces, Helm release definitions and Deployments for applications
+
+```
+./platform-apps/
 ├── base
 │   └── kafka-streams
-│       ├── kustomization.yaml
-│       ├── namespace.yaml
-│       └── apply-rules-job.yaml
-├── dev
-│   ├── kustomization.yaml
-│   └── example-patch.yaml
+│   │   ├── kustomization.yaml
+│   │   ├── namespace.yaml
+│   │   └── apply-rules-job.yaml
+|   ├── iotedge
+│         ├── kustomization.yaml
+│         └── example-patch.yaml
 └── live
     ├── kustomization.yaml
     └── example-patch.yaml

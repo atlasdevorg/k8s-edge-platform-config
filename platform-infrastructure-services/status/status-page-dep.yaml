@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: status-page
+  namespace: boost
+  labels:
+    app: status-page
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: status-page
+  template:
+    metadata:
+      labels:
+        app: status-page
+    spec:
+      containers:
+      - name: status-paged
+        image: twinproduction/gatus:v2.1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP        
+        volumeMounts:
+          - mountPath: /config
+            name: status-page-config
+        resources:
+          limits:
+            cpu: 200m
+            memory: 50Mi
+          requests:
+            cpu: 10m
+            memory: 20Mi
+      volumes:
+        - configMap:
+            name: status-page-config
+          name: status-page-config
+
