@@ -3,7 +3,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: schema-register-job
-  namespace: kafka
+  namespace: kafka-streams
   annotations:
     fluxcd.io/automated: "true"
     fluxcd.io/tag.schema-register-jobd: glob:test-*
@@ -19,7 +19,7 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: REGISTRY_URL
-          value: http://avro-schema-registry
+          value: http://avro-schema-registry.kafka
         resources:
           limits:
             cpu: 100m
