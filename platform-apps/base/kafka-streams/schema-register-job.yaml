@@ -14,7 +14,7 @@ spec:
   template:
     spec:
       imagePullSecrets:
-        - name: acr-secret
+      - name: acr-secret
       containers:
       - name: schema-register-jobd
         image: sodadeveloper.azurecr.io/boost-schema-register-job:7262
