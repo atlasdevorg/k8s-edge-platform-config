@@ -21,7 +21,7 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: REGISTRY_URL
-          value: http://avro-schema-registry.kafka
+          value: http://avro-schema-registry.kafka:30081
         resources:
           limits:
             cpu: 100m
