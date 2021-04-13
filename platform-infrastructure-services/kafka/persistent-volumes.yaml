@@ -10,7 +10,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /run/desktop/mnt/c/docker/volumes/pv1
+    path: /run/desktop/mnt/host/c/docker/volumes/pv1
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -32,7 +32,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /run/desktop/mnt/c/docker/volumes/pv2
+    path: /run/desktop/mnt/host/c/docker/volumes/pv2
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -54,7 +54,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /run/desktop/mnt/c/docker/volumes/pv3
+    path: /run/desktop/mnt/host/c/docker/volumes/pv3
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -76,7 +76,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /run/desktop/mnt/c/docker/volumes/pv4
+    path: /run/desktop/mnt/host/c/docker/volumes/pv4
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -98,7 +98,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /run/desktop/mnt/c/docker/volumes/pv5
+    path: /run/desktop/mnt/host/c/docker/volumes/pv5
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -120,7 +120,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /run/desktop/mnt/c/docker/volumes/pv6
+    path: /run/desktop/mnt/host/c/docker/volumes/pv6
   nodeAffinity:
     required:
       nodeSelectorTerms:
