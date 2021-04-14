@@ -6,3 +6,4 @@ resources:
   - sealedsecrets
   - iotedge
   - namespaces
+  - traefik
