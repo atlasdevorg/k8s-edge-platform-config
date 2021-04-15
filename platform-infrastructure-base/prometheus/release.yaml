@@ -27,7 +27,7 @@ spec:
         storageClass: local-storage
         size: 2Gi
     serverFiles:
-      alerting_rules.yml: |
+      alerting_rules.yml:
         groups:
           - name: kafka
             rules:
