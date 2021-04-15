@@ -26,6 +26,19 @@ spec:
       persistentVolume:
         storageClass: local-storage
         size: 2Gi
+    alertmanagerFiles:
+      alertmanager.yml:
+        receivers:
+        - name: 'external_alerts_receiver'
+          webhook_configs:
+            - send_resolved: true
+              url: 'http://prometheus-msteams.tenant-infrastructure:2000/high_priority_channel'
+        route:
+          group_by: ['alertname']
+          group_interval: 5m
+          repeat_interval: 10m
+          group_wait: 30s
+          receiver: 'external_alerts_receiver'  # default/fallback request handler
     serverFiles:
       alerting_rules.yml:
         groups:
