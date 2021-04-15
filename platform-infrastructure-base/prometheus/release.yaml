@@ -29,10 +29,61 @@ spec:
     serverFiles:
       alerting_rules.yml:
         groups:
+        - name: kafka-streams
+          rules:
+          - alert: ApplyRulesContainerDown
+            expr: count((container_last_seen{container="apply-rules-jobd"} > (time() - 90))) < 1 or absent(container_last_seen{container="apply-rules-jobd"})
+            for: 1m
+            labels:
+              severity: major
+            annotations:
+              summary: 'Apply Rules container down'
+              description: 'Apply Rules container has been down for longer than 90 seconds'
+          - alert: ApplyFilterRulesContainerDown
+            expr: count((container_last_seen{container="apply-filterrules-jobd"} > (time() - 90))) < 1 or absent(container_last_seen{container="apply-filterrules-jobd"})
+            for: 1m
+            labels:
+              severity: major
+            annotations:
+              summary: 'Apply FilterRules container down'
+              description: 'Apply FilterRules container has been down for longer than 90 seconds'
+          - alert: LabelDataContainerDown
+            expr: count((container_last_seen{container="label-data-jobd"} > (time() - 90))) < 1 or absent(container_last_seen{container="label-data-jobd"})
+            for: 1m
+            labels:
+              severity: major
+            annotations:
+              summary: 'LabelData container down'
+              description: 'LabelData container has been down for longer than 90 seconds'
+          - alert: LabelDataRestartedInTheLast5Minutes
+            expr: count(rate(kube_pod_container_status_restarts_total{container="label-data-jobd"}[5m]) > 1)
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: 'LabelData container restarted too often'
+              description: 'LabelData container restarted too often within the last 5 minutes'
+          - alert: ApplyRulesRestartedInTheLast5Minutes
+            expr: count(rate(kube_pod_container_status_restarts_total{container="apply-rules-jobd"}[5m]) > 1)
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: 'ApplyRules container restarted too often'
+              description: 'ApplyRules container restarted too often within the last 5 minutes'
+          - alert: ApplyFilterRulesRestartedInTheLast5Minutes
+            expr: count(rate(kube_pod_container_status_restarts_total{container="apply-filterrules-jobd"}[5m]) > 1)
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: 'Apply FilterRules container restarted too often'
+              description: 'ApplyFilterRules container restarted too often within the last 5 minutes'
+
         - name: kafka
           rules:
           - alert: KafkaRunningOutOfSpace
-            expr: kubelet_volume_stats_available_bytes{persistentvolumeclaim=~"data-([0-9]+)?-(.+)-kafka-[0-9]+"} < 5368709120
+            expr: kubelet_volume_stats_available_bytes{persistentvolumeclaim=~"data-kafka-cluster-kafka-[0-9]+"} < 5368709120
             for: 10s
             labels:
               severity: warning
@@ -130,7 +181,7 @@ spec:
               summary: 'Zookeeper outstanding requests'
               description: 'There are {{ $value }} outstanding requests on {{ $labels.kubernetes_pod_name }}'
           - alert: ZookeeperRunningOutOfSpace
-            expr: kubelet_volume_stats_available_bytes{persistentvolumeclaim=~"data-(.+)-zookeeper-[0-9]+"} < 5368709120
+            expr: kubelet_volume_stats_available_bytes{persistentvolumeclaim=~"data-kafka-cluster-zookeeper-[0-9]+"} < 5368709120
             for: 10s
             labels:
               severity: warning
@@ -179,76 +230,6 @@ spec:
             annotations:
               summary: 'Container tls-sidecar Entity Operator pod down or in CrashLookBackOff status'
               description: 'Container tls-sidecar in Entity Operator pod have been down or in CrashLookBackOff status for 3 minutes'
-        - name: connect
-          rules:
-          - alert: ConnectContainersDown
-            expr: absent(container_last_seen{container=~".+-connect",pod=~".+-connect-.+"})
-            for: 3m
-            labels:
-              severity: major
-            annotations:
-              summary: 'All Kafka Connect containers down or in CrashLookBackOff status'
-              description: 'All Kafka Connect containers have been down or in CrashLookBackOff status for 3 minutes'
-        - name: bridge
-          rules:
-          - alert: BridgeContainersDown
-            expr: absent(container_last_seen{container=~".+-bridge",pod=~".+-bridge-.+"})
-            for: 3m
-            labels:
-              severity: major
-            annotations:
-              summary: 'All Kafka Bridge containers down or in CrashLookBackOff status'
-              description: 'All Kafka Bridge containers have been down or in CrashLookBackOff status for 3 minutes'
-          - alert: AvgProducerLatency
-            expr: strimzi_bridge_kafka_producer_request_latency_avg > 10
-            for: 10s
-            labels:
-              severity: warning
-            annotations:
-              summary: 'Kafka Bridge average consumer fetch latency'
-              description: 'The average fetch latency is {{ $value }} on {{ $labels.clientId }}'
-          - alert: AvgConsumerFetchLatency
-            expr: strimzi_bridge_kafka_consumer_fetch_latency_avg > 500
-            for: 10s
-            labels:
-              severity: warning
-            annotations:
-              summary: 'Kafka Bridge consumer average fetch latency'
-              description: 'The average consumer commit latency is {{ $value }} on {{ $labels.clientId }}'
-          - alert: AvgConsumerCommitLatency
-            expr: strimzi_bridge_kafka_consumer_commit_latency_avg > 200
-            for: 10s
-            labels:
-              severity: warning
-            annotations:
-              summary: 'Kafka Bridge consumer average commit latency'
-              description: 'The average consumer commit latency is {{ $value }} on {{ $labels.clientId }}'
-          - alert: Http4xxErrorRate
-            expr: strimzi_bridge_http_server_requestCount_total{code=~"^4..$", container=~"^.+-bridge", path !="/favicon.ico"} > 10
-            for: 1m
-            labels:
-              severity: warning
-            annotations:
-              summary: 'Kafka Bridge returns code 4xx too often'
-              description: 'Kafka Bridge returns code 4xx too much ({{ $value }}) for the path {{ $labels.path }}'
-          - alert: Http5xxErrorRate
-            expr: strimzi_bridge_http_server_requestCount_total{code=~"^5..$", container=~"^.+-bridge"} > 10
-            for: 1m
-            labels:
-              severity: warning
-            annotations:
-              summary: 'Kafka Bridge returns code 5xx too often'
-              description: 'Kafka Bridge returns code 5xx too much ({{ $value }}) for the path {{ $labels.path }}'
-        - name: mirrorMaker
-          rules:
-          - alert: MirrorMakerContainerDown
-            expr: absent(container_last_seen{container=~".+-mirror-maker",pod=~".+-mirror-maker-.+"})
-            for: 3m
-            labels:
-              severity: major
-            annotations:
-              summary: 'All Kafka Mirror Maker containers down or in CrashLookBackOff status'
-              description: 'All Kafka Mirror Maker containers have been down or in CrashLookBackOff status for 3 minutes'
         - name: kafkaExporter
           rules:
           - alert: UnderReplicatedPartition
