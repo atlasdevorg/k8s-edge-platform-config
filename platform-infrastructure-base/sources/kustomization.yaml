@@ -6,3 +6,5 @@ resources:
   - sealed-secrets.yaml
   - microsoft-iotedge.yaml
   - traefik.yaml
+  - prometheus-community.yaml
+  - kube-state-metrics.yaml
