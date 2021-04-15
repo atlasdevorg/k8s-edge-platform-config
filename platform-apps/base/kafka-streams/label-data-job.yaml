@@ -5,7 +5,7 @@ metadata:
   namespace: kafka-streams
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.apply-rules-jobd: glob:test-*
+    fluxcd.io/tag.label-data-jobd: glob:test-*
     fluxcd.io/tag.init: glob:test-*
   labels:
     app: label-data-job
@@ -26,7 +26,7 @@ spec:
       imagePullSecrets:
         - name: acr-secret
       containers:
-      - name: apply-filterrules-jobd
+      - name: label-data-jobd
         image: sodadeveloper.azurecr.io/boost-kafka-streams-edge:test-2
         imagePullPolicy: IfNotPresent
         env:
