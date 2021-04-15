@@ -19,6 +19,13 @@ spec:
     remediation:
       retries: 3
   values:
+    alertmanager:
+      persistentVolume:
+        storageClass: local-storage
+    server:
+      persistentVolume:
+        storageClass: local-storage
+        size: 2Gi
     serverFiles:
       alerting_rules.yml: |
         groups:
