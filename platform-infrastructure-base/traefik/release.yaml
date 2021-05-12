@@ -19,6 +19,12 @@ spec:
     remediation:
       retries: 3
   values:
+    ports:
+      mqtt:
+        port: 1883
+        expose: true
+        exposedPort: 1883
+        protocol: TCP
     logs:
       general:
         level: ERROR
