@@ -5,3 +5,4 @@ resources:
   - strimzi.yaml
   - sealed-secrets.yaml
   - microsoft-iotedge.yaml
+  - traefik.yaml
