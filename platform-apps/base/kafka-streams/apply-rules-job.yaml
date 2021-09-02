@@ -10,7 +10,7 @@ metadata:
   labels:
     app: apply-rules-job
 spec:
-  replicas: 1
+  replicas: 0
   strategy:
     rollingUpdate:
       maxUnavailable: 0
