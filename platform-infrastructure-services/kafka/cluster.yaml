@@ -28,6 +28,12 @@ spec:
       type: persistent-claim
       size: 5Gi
       class: local-storage
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          name: kafka-metrics
+          key: kafka-metrics-config.yml
 
   zookeeper:
     replicas: 1
@@ -42,6 +48,12 @@ spec:
       type: inline
       loggers:
         zookeeper.root.logger: ERROR
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          name: kafka-metrics
+          key: zookeeper-metrics-config.yml
 
   entityOperator:
     topicOperator:

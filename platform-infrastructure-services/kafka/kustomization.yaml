@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: kafka
 resources:
   - cluster.yaml
+  - kafka-metrics-config.yaml
   - persistent-volumes.yaml
   
   - topic-input.yaml
