@@ -4,7 +4,7 @@ namespace: kafka
 resources:
   - cluster.yaml
   - kafka-metrics-config.yaml
-  - kafka-metrics.svc.yaml
+  - kafka-metrics-svc.yaml
   - persistent-volumes.yaml
   
   - topic-input.yaml
