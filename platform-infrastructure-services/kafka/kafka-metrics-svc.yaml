@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-metrics-headless-service
+  namespace: kafka
+spec:
+  clusterIP: None 
+  selector:
+    app.kubernetes.io/name: kafka
+  ports:
+    - protocol: TCP
+      port: 9404
+      targetPort: 9404
