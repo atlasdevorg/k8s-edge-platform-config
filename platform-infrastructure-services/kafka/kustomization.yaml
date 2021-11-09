@@ -11,6 +11,7 @@ resources:
   - topic-jobstart.yaml
   - topic-outputdata.yaml
   - topic-processeddata.yaml
+  - topic-deadletter.yaml
 
 
 
