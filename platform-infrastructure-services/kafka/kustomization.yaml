@@ -16,6 +16,7 @@ resources:
   - topic-checkreferences.yaml
   - topic-output.yaml
   - topic-entitychangedoutput.yaml
+  - topic-deadletter.yaml
 
 
 
