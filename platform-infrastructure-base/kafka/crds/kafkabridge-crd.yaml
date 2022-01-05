@@ -41,9 +41,9 @@ spec:
   conversion:
     strategy: None
   versions:
-  - name: v1beta2
+  - name: v1alpha1
     served: true
-    storage: false
+    storage: true
     schema:
       openAPIV3Schema:
         type: object
@@ -325,6 +325,10 @@ spec:
                   loggers:
                     type: object
                     description: A Map from logger name to logger level.
+                  name:
+                    type: string
+                    description: The name of the `ConfigMap` from which to get the
+                      logging configuration.
                   type:
                     type: string
                     enum:
@@ -1002,9 +1006,9 @@ spec:
                 description: The current number of pods being used to provide this
                   resource.
             description: The status of the Kafka Bridge.
-  - name: v1alpha1
+  - name: v1beta2
     served: true
-    storage: true
+    storage: false
     schema:
       openAPIV3Schema:
         type: object
@@ -1286,10 +1290,6 @@ spec:
                   loggers:
                     type: object
                     description: A Map from logger name to logger level.
-                  name:
-                    type: string
-                    description: The name of the `ConfigMap` from which to get the
-                      logging configuration.
                   type:
                     type: string
                     enum:
