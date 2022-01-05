@@ -7,7 +7,7 @@ resources:
   - local-storage.yaml
   - crds/kafka-crd.yaml
   #- crds/kafkabridge-crd.yaml
-  - crds/kafkaconnect-crd.yaml
+  #- crds/kafkaconnect-crd.yaml
   #- crds/kafkaconnector-crd.yaml
   - crds/kafkaconnects2i-crd.yaml
   - crds/kafkamirrormaker-crd.yaml
