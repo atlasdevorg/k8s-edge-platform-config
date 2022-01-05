@@ -36,9 +36,9 @@ spec:
   conversion:
     strategy: None
   versions:
-  - name: v1beta2
+  - name: v1beta1
     served: true
-    storage: false
+    storage: true
     schema:
       openAPIV3Schema:
         type: object
@@ -365,12 +365,241 @@ spec:
                     description: Authentication configuration for connecting to the
                       JMX port.
                 description: JMX Options.
+              affinity:
+                type: object
+                properties:
+                  nodeAffinity:
+                    type: object
+                    properties:
+                      preferredDuringSchedulingIgnoredDuringExecution:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            preference:
+                              type: object
+                              properties:
+                                matchExpressions:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      key:
+                                        type: string
+                                      operator:
+                                        type: string
+                                      values:
+                                        type: array
+                                        items:
+                                          type: string
+                                matchFields:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      key:
+                                        type: string
+                                      operator:
+                                        type: string
+                                      values:
+                                        type: array
+                                        items:
+                                          type: string
+                            weight:
+                              type: integer
+                      requiredDuringSchedulingIgnoredDuringExecution:
+                        type: object
+                        properties:
+                          nodeSelectorTerms:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                matchExpressions:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      key:
+                                        type: string
+                                      operator:
+                                        type: string
+                                      values:
+                                        type: array
+                                        items:
+                                          type: string
+                                matchFields:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      key:
+                                        type: string
+                                      operator:
+                                        type: string
+                                      values:
+                                        type: array
+                                        items:
+                                          type: string
+                  podAffinity:
+                    type: object
+                    properties:
+                      preferredDuringSchedulingIgnoredDuringExecution:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            podAffinityTerm:
+                              type: object
+                              properties:
+                                labelSelector:
+                                  type: object
+                                  properties:
+                                    matchExpressions:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          key:
+                                            type: string
+                                          operator:
+                                            type: string
+                                          values:
+                                            type: array
+                                            items:
+                                              type: string
+                                    matchLabels:
+                                      type: object
+                                namespaces:
+                                  type: array
+                                  items:
+                                    type: string
+                                topologyKey:
+                                  type: string
+                            weight:
+                              type: integer
+                      requiredDuringSchedulingIgnoredDuringExecution:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            labelSelector:
+                              type: object
+                              properties:
+                                matchExpressions:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      key:
+                                        type: string
+                                      operator:
+                                        type: string
+                                      values:
+                                        type: array
+                                        items:
+                                          type: string
+                                matchLabels:
+                                  type: object
+                            namespaces:
+                              type: array
+                              items:
+                                type: string
+                            topologyKey:
+                              type: string
+                  podAntiAffinity:
+                    type: object
+                    properties:
+                      preferredDuringSchedulingIgnoredDuringExecution:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            podAffinityTerm:
+                              type: object
+                              properties:
+                                labelSelector:
+                                  type: object
+                                  properties:
+                                    matchExpressions:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          key:
+                                            type: string
+                                          operator:
+                                            type: string
+                                          values:
+                                            type: array
+                                            items:
+                                              type: string
+                                    matchLabels:
+                                      type: object
+                                namespaces:
+                                  type: array
+                                  items:
+                                    type: string
+                                topologyKey:
+                                  type: string
+                            weight:
+                              type: integer
+                      requiredDuringSchedulingIgnoredDuringExecution:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            labelSelector:
+                              type: object
+                              properties:
+                                matchExpressions:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      key:
+                                        type: string
+                                      operator:
+                                        type: string
+                                      values:
+                                        type: array
+                                        items:
+                                          type: string
+                                matchLabels:
+                                  type: object
+                            namespaces:
+                              type: array
+                              items:
+                                type: string
+                            topologyKey:
+                              type: string
+                description: The pod's affinity rules.
+              tolerations:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    effect:
+                      type: string
+                    key:
+                      type: string
+                    operator:
+                      type: string
+                    tolerationSeconds:
+                      type: integer
+                    value:
+                      type: string
+                description: The pod's tolerations.
               logging:
                 type: object
                 properties:
                   loggers:
                     type: object
                     description: A Map from logger name to logger level.
+                  name:
+                    type: string
+                    description: The name of the `ConfigMap` from which to get the
+                      logging configuration.
                   type:
                     type: string
                     enum:
@@ -396,6 +625,10 @@ spec:
                 required:
                 - type
                 description: Logging configuration for Kafka Connect.
+              metrics:
+                type: object
+                description: The Prometheus JMX Exporter configuration. See https://github.com/prometheus/jmx_exporter
+                  for details of the structure of this configuration.
               tracing:
                 type: object
                 properties:
@@ -1830,9 +2063,9 @@ spec:
                 description: The current number of pods being used to provide this
                   resource.
             description: The status of the Kafka Connect Source-to-Image (S2I) cluster.
-  - name: v1beta1
+  - name: v1beta2
     served: true
-    storage: true
+    storage: false
     schema:
       openAPIV3Schema:
         type: object
@@ -2159,241 +2392,12 @@ spec:
                     description: Authentication configuration for connecting to the
                       JMX port.
                 description: JMX Options.
-              affinity:
-                type: object
-                properties:
-                  nodeAffinity:
-                    type: object
-                    properties:
-                      preferredDuringSchedulingIgnoredDuringExecution:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            preference:
-                              type: object
-                              properties:
-                                matchExpressions:
-                                  type: array
-                                  items:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: string
-                                      operator:
-                                        type: string
-                                      values:
-                                        type: array
-                                        items:
-                                          type: string
-                                matchFields:
-                                  type: array
-                                  items:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: string
-                                      operator:
-                                        type: string
-                                      values:
-                                        type: array
-                                        items:
-                                          type: string
-                            weight:
-                              type: integer
-                      requiredDuringSchedulingIgnoredDuringExecution:
-                        type: object
-                        properties:
-                          nodeSelectorTerms:
-                            type: array
-                            items:
-                              type: object
-                              properties:
-                                matchExpressions:
-                                  type: array
-                                  items:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: string
-                                      operator:
-                                        type: string
-                                      values:
-                                        type: array
-                                        items:
-                                          type: string
-                                matchFields:
-                                  type: array
-                                  items:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: string
-                                      operator:
-                                        type: string
-                                      values:
-                                        type: array
-                                        items:
-                                          type: string
-                  podAffinity:
-                    type: object
-                    properties:
-                      preferredDuringSchedulingIgnoredDuringExecution:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            podAffinityTerm:
-                              type: object
-                              properties:
-                                labelSelector:
-                                  type: object
-                                  properties:
-                                    matchExpressions:
-                                      type: array
-                                      items:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: string
-                                          operator:
-                                            type: string
-                                          values:
-                                            type: array
-                                            items:
-                                              type: string
-                                    matchLabels:
-                                      type: object
-                                namespaces:
-                                  type: array
-                                  items:
-                                    type: string
-                                topologyKey:
-                                  type: string
-                            weight:
-                              type: integer
-                      requiredDuringSchedulingIgnoredDuringExecution:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            labelSelector:
-                              type: object
-                              properties:
-                                matchExpressions:
-                                  type: array
-                                  items:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: string
-                                      operator:
-                                        type: string
-                                      values:
-                                        type: array
-                                        items:
-                                          type: string
-                                matchLabels:
-                                  type: object
-                            namespaces:
-                              type: array
-                              items:
-                                type: string
-                            topologyKey:
-                              type: string
-                  podAntiAffinity:
-                    type: object
-                    properties:
-                      preferredDuringSchedulingIgnoredDuringExecution:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            podAffinityTerm:
-                              type: object
-                              properties:
-                                labelSelector:
-                                  type: object
-                                  properties:
-                                    matchExpressions:
-                                      type: array
-                                      items:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: string
-                                          operator:
-                                            type: string
-                                          values:
-                                            type: array
-                                            items:
-                                              type: string
-                                    matchLabels:
-                                      type: object
-                                namespaces:
-                                  type: array
-                                  items:
-                                    type: string
-                                topologyKey:
-                                  type: string
-                            weight:
-                              type: integer
-                      requiredDuringSchedulingIgnoredDuringExecution:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            labelSelector:
-                              type: object
-                              properties:
-                                matchExpressions:
-                                  type: array
-                                  items:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: string
-                                      operator:
-                                        type: string
-                                      values:
-                                        type: array
-                                        items:
-                                          type: string
-                                matchLabels:
-                                  type: object
-                            namespaces:
-                              type: array
-                              items:
-                                type: string
-                            topologyKey:
-                              type: string
-                description: The pod's affinity rules.
-              tolerations:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    effect:
-                      type: string
-                    key:
-                      type: string
-                    operator:
-                      type: string
-                    tolerationSeconds:
-                      type: integer
-                    value:
-                      type: string
-                description: The pod's tolerations.
               logging:
                 type: object
                 properties:
                   loggers:
                     type: object
                     description: A Map from logger name to logger level.
-                  name:
-                    type: string
-                    description: The name of the `ConfigMap` from which to get the
-                      logging configuration.
                   type:
                     type: string
                     enum:
@@ -2419,10 +2423,6 @@ spec:
                 required:
                 - type
                 description: Logging configuration for Kafka Connect.
-              metrics:
-                type: object
-                description: The Prometheus JMX Exporter configuration. See https://github.com/prometheus/jmx_exporter
-                  for details of the structure of this configuration.
               tracing:
                 type: object
                 properties:
