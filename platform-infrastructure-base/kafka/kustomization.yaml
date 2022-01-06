@@ -5,16 +5,16 @@ resources:
   - namespace.yaml
   - release.yaml
   - local-storage.yaml
-  - crds/kafka-crd.yaml
-  #- crds/kafkabridge-crd.yaml
-  #- crds/kafkaconnect-crd.yaml
-  #- crds/kafkaconnector-crd.yaml
-  #- crds/kafkaconnects2i-crd.yaml
-  #- crds/kafkamirrormaker-crd.yaml
-  #- crds/kafkamirrormaker2-crd.yaml
-  - crds/kafkarebalance-crd.yaml
+  #- crds/kafka-crd.yaml
+  ##- crds/kafkabridge-crd.yaml
+  ##- crds/kafkaconnect-crd.yaml
+  ##- crds/kafkaconnector-crd.yaml
+  ##- crds/kafkaconnects2i-crd.yaml
+  ##- crds/kafkamirrormaker-crd.yaml
+  ##- crds/kafkamirrormaker2-crd.yaml
+  #- crds/kafkarebalance-crd.yaml
   - crds/kafkatopic-crd.yaml
-  - crds/kafkauser-crd.yaml
-  #- crds/strimzi-crds-0.22.1.yaml
+  #- crds/kafkauser-crd.yaml
+  ##- crds/strimzi-crds-0.22.1.yaml
 
 
