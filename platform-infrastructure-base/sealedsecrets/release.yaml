@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: sealed-secrets
         namespace: flux-system
-      version: "1.13.2"
+      version: "2.0.2"
   interval: 1h0m0s
   install:
     remediation:
