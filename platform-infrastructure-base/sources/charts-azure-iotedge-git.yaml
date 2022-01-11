@@ -8,4 +8,4 @@ spec:
   interval: 10m0s
   ref:
     branch: main
-  url: ssh://git@github.com/atlasdevorg/charts-azure-iotedge
+  url: https://github.com/atlasdevorg/charts-azure-iotedge
