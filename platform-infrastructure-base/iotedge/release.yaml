@@ -6,12 +6,12 @@ spec:
   releaseName: edge-crd
   chart:
     spec:
-      chart: ./edge-kubernetes-crd
+      chart: edge-kubernetes-crd
       sourceRef:
-        name: charts-azure-iotedge
+        kind: HelmRepository
+        name: microsoft-iotedge
         namespace: flux-system
-        kind: GitRepository
-      version: "1.2.13"
+      version: "0.2.11"
   interval: 1h0m0s
   install:
     remediation:
