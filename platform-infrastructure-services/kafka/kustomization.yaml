@@ -17,6 +17,7 @@ resources:
   - topic-output.yaml
   - topic-entitychangedoutput.yaml
   - topic-deadletter.yaml
+  - topic-imageclassification.yaml
 
 
 
