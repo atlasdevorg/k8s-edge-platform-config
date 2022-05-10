@@ -4,7 +4,6 @@ namespace: kafka
 resources:
   - cluster.yaml
   - persistent-volumes.yaml
-  - confluent-registry.yaml
   - topic-data.yaml
   - topic-fieldrules.yaml
   - topic-filterdata.yaml
