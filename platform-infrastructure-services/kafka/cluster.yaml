@@ -27,7 +27,7 @@ spec:
     storage:
       type: persistent-claim
       size: 5Gi
-      class: local-storage
+      class: local-path
 
   zookeeper:
     replicas: 1
@@ -36,7 +36,7 @@ spec:
         memory: 1400Mi
     storage:
       type: persistent-claim
-      class: local-storage
+      class: local-path
       size: 5Gi
     logging:
       type: inline
