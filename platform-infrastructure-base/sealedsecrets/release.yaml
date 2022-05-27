@@ -16,4 +16,8 @@ spec:
   install:
     remediation:
       retries: 3
-
+  values:
+    image:
+      registry: docker.io
+      repository: bitnami/sealed-secrets-controller
+      tag: v0.13.1
